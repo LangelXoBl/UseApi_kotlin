@@ -31,5 +31,9 @@
         android:id="@+id/trendingWeekFragment"
         android:name="com.example.testandroid.ui.trendingWeek.TrendingWeekFragment"
         android:label="@string/action_trendingWeek"
-        tools:layout="@layout/fragment_trending_week" />
+        tools:layout="@layout/fragment_trending_week" >
+        <action
+            android:id="@+id/action_trendingWeekFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>
