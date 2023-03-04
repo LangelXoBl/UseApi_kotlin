@@ -54,7 +54,7 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
                     Log.e("fetchPopularMovies", "Loading")
                 }
                 ResourceStatus.SUCCESS  -> {
-                    Log.e("fetchPopularMovies", "Success")
+                    Log.e("fetchPopularMovies", "Success data: ${it.data?.size}")
                     popularMovieItemAdapter = PopularMovieItemAdapter(it.data!!, this@PopularFragment)
                     binding.rvMovies.adapter = popularMovieItemAdapter
                 }
