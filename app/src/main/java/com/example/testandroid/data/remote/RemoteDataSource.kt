@@ -6,4 +6,6 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiServices: ApiService) : BaseDataSource() {
     suspend fun getPopularMovies() = getResult { apiServices.getPopularMovies(Const.API_KEY) }
+
+    suspend fun getTopRatedMovies() = getResult { apiServices.getTopRatedmovies(Const.API_KEY) }
 }
