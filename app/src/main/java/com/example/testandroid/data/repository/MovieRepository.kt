@@ -1,6 +1,7 @@
 package com.example.testandroid.data.repository
 
 import com.example.testandroid.data.local.MovieDao
+import com.example.testandroid.data.model.Movie
 import com.example.testandroid.data.model.MovieType
 import com.example.testandroid.data.model.toMovieEntityList
 import com.example.testandroid.data.remote.RemoteDataSource
@@ -18,9 +19,10 @@ class MovieRepository @Inject constructor(
         saveCallResult = { localDataSource.insertAll(it.results.toMovieEntityList(MovieType.POPULAR.value)) }
     )
 
-    fun getTopRatedMovies()= performGetOperation(
-        databaseQuery = {localDataSource.getAllMovies(MovieType.TopRated.value)},
+    fun getTopRatedMovies() = performGetOperation(
+        databaseQuery = {localDataSource.getAllMovies(MovieType.TOPRATED.value)},
         networkCall = {remoteDataSource.getTopRatedMovies()},
-        saveCallResult = {localDataSource.insertAll(it.results.toMovieEntityList(MovieType.TopRated.value))}
+        saveCallResult = {localDataSource.insertAll(it.results.toMovieEntityList(MovieType.TOPRATED.value))}
+
     )
 }
