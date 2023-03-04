@@ -9,4 +9,8 @@ interface ApiService {
 
     @GET("movie/popular")
     suspend fun getPopularMovies(@Query("api_key") apiKey: String): Response<GetMoviesResponse>
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedmovies(@Query("api_key") apiKey: String):Response<GetMoviesResponse>
+
 }
