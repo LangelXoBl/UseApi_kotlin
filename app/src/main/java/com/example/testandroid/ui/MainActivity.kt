@@ -4,12 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
+import androidx.navigation.ui.setupWithNavController
 import com.example.testandroid.R
 import com.example.testandroid.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -23,5 +22,15 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val navView: BottomNavigationView = binding.bottomNavigationView
+
+        val navController =findNavController(R.id.nav_host_fragment_content_main)
+
+        val appConfiguration = AppBarConfiguration(setOf(R.id.homeFragment,R.id.tvFragment, R.id.trendingWeekFragment))
+
+        setupActionBarWithNavController(navController, appConfiguration)
+
+        navView.setupWithNavController(navController)
     }
 }
