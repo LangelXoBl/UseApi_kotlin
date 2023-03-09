@@ -17,5 +17,5 @@ class PopularViewModel @Inject constructor (private val repository: MovieReposit
 
 
 
-    val fetchPopularMovies: LiveData<Resource<List<MovieEntity>>> = repository.getPopularMovies()
+    fun fetchPopularMovies(page: Int): LiveData<Resource<List<MovieEntity>>> = repository.getPopularMovies(page)
 }

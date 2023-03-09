@@ -1,6 +1,6 @@
 package com.example.testandroid.utils
 
 object Paging{
-    var page=0
+    var page=1
     var loading=false
 }

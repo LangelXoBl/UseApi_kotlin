@@ -13,9 +13,9 @@ class MovieRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource) {
 
 
-    fun getPopularMovies() = performGetOperation(
+    fun getPopularMovies(page : Int) = performGetOperation(
         databaseQuery = { localDataSource.getAllMovies(MovieType.POPULAR.value) },
-        networkCall = { remoteDataSource.getPopularMovies() },
+        networkCall = { remoteDataSource.getPopularMovies(page) },
         saveCallResult = { localDataSource.insertAll(it.results.toMovieEntityList(MovieType.POPULAR.value)) }
     )
 

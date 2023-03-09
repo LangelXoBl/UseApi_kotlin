@@ -1,6 +1,7 @@
 package com.example.testandroid.ui.popular
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -44,8 +45,15 @@ class PopularMovieItemAdapter (
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun addMovies(movies: List<MovieEntity>) {
+        val previousSize = moviesList.size
+        moviesList.addAll(movies)
+        notifyItemRangeInserted(previousSize, movies.size)
+    }
 
-    fun moreMovies(newMovies: List<MovieEntity>){
+
+    fun moreMovies(newMovies: MutableList<MovieEntity>){
         moviesList.addAll(newMovies)
     }
 

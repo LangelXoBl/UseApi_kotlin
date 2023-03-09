@@ -16,24 +16,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_popular_movie"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/total_results"/>
+            android:text="@string/total_results" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_movies"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_movie" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_movies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_movie" />
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

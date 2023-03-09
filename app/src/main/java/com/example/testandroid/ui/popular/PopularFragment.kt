@@ -19,6 +19,7 @@ import com.example.testandroid.data.entities.MovieEntity
 import com.example.testandroid.data.model.Movie
 import com.example.testandroid.data.model.ResourceStatus
 import com.example.testandroid.databinding.FragmentPopularBinding
+import com.example.testandroid.utils.Paging
 import com.example.testandroid.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,7 +37,9 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
     }
 
     private lateinit var popularMovieItemAdapter: PopularMovieItemAdapter
-
+//Global
+    private var page=1
+    private  var loading=false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,7 +55,7 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
 
         binding.rvMovies.layoutManager = LinearLayoutManager(context)
 
-        this.viewModel.fetchPopularMovies.observe(viewLifecycleOwner, Observer {
+        viewModel.fetchPopularMovies(page).observe(viewLifecycleOwner, Observer {
             when (it.resourceStatus) {
                 ResourceStatus.LOADING -> {
                     Log.e("fetchPopularMovies", "Loading")
@@ -60,8 +63,13 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
                 ResourceStatus.SUCCESS  -> {
                     Log.e("fetchPopularMovies", "Success data: ${it.data?.size}")
                     binding.total.text= it.data?.size.toString()
-                    popularMovieItemAdapter = PopularMovieItemAdapter(it.data!! as MutableList<MovieEntity>, this@PopularFragment)
-                    binding.rvMovies.adapter = popularMovieItemAdapter
+                    if (::popularMovieItemAdapter.isInitialized) {
+                        popularMovieItemAdapter.addMovies(it.data!!)
+                    } else {
+                        popularMovieItemAdapter = PopularMovieItemAdapter(it.data!! as MutableList<MovieEntity>, this@PopularFragment)
+                        binding.rvMovies.adapter = popularMovieItemAdapter
+                    }
+
                 }
                 ResourceStatus.ERROR -> {
                     Log.e("fetchPopularMovies", "Failure: ${it.message} ")
@@ -77,27 +85,32 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
                 val layoutManager = binding.rvMovies.layoutManager as LinearLayoutManager
                 val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
                 val totalItemCount = layoutManager.itemCount
-                if (lastVisibleItemPosition == totalItemCount - 1) {
-                    moreMovies()
+                if (lastVisibleItemPosition == totalItemCount - 1 && !loading) {
+                    binding.rvMovies.post{
+                        loading = true
+                        page++
+                        Log.e("page", page.toString())
+                        moreMovies()
+                    }
                 }
             }
         })
 
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
     private fun moreMovies(){
-        lifecycleScope.launch{
-            viewModel.fetchPopularMovies.observe(viewLifecycleOwner, Observer {
+        lifecycleScope.launch(){
+            viewModel.fetchPopularMovies(page).observe(viewLifecycleOwner, Observer {
                 when (it.resourceStatus) {
                     ResourceStatus.LOADING -> {
                         Log.e("fetchPopularMovies", "Loading")
                     }
                     ResourceStatus.SUCCESS  -> {
                         Log.e("fetchPopularMovies", "Success data: ${it.data?.size}")
+                        Log.e("moreMovies: ", it.data.toString())
                         binding.total.text= it.data?.size.toString()
-                        it.data?.let { it1 -> popularMovieItemAdapter.moreMovies(it1) }
+                            popularMovieItemAdapter.moreMovies(it.data as MutableList<MovieEntity>)
                         popularMovieItemAdapter.notifyDataSetChanged()
                     }
                     ResourceStatus.ERROR -> {
@@ -106,6 +119,7 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
                             .show()
                     }
                 }
+                loading = false
             })
         }
     }
