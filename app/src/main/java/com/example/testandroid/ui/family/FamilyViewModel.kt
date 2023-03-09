@@ -1,6 +1,5 @@
-package com.example.testandroid.ui.Family
+package com.example.testandroid.ui.family
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.testandroid.data.entities.MovieEntity

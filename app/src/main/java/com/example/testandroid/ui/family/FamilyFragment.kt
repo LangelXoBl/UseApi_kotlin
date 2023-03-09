@@ -1,4 +1,4 @@
-package com.example.testandroid.ui.Family
+package com.example.testandroid.ui.family
 
 import android.os.Bundle
 import android.util.Log
@@ -15,8 +15,9 @@ import com.example.testandroid.R
 import com.example.testandroid.data.entities.MovieEntity
 import com.example.testandroid.data.model.ResourceStatus
 import com.example.testandroid.databinding.FragmentFamilyBinding
-import kotlin.math.log
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FamilyFragment : Fragment(), FamilyMovieItemAdapter.OnMovieClickListener {
     private var _binding: FragmentFamilyBinding? = null
     private val binding get() = _binding!!

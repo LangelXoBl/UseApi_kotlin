@@ -1,9 +1,7 @@
-package com.example.testandroid.ui.Family
+package com.example.testandroid.ui.family
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testandroid.data.entities.MovieEntity
 import com.example.testandroid.databinding.ItemMovieBinding

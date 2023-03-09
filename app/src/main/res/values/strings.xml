@@ -2,7 +2,7 @@
     <string name="app_name">TestAndroid</string>
     <!--Menu-->
     <string name="action_popular">Popular</string>
-    <string name="action_tv">TV</string>
+    <string name="action_family">Family</string>
     <string name="action_trendingWeek">Trending week</string>
     <string name="action_detail">Details</string>
     <!-- Strings used for fragments for navigation -->
