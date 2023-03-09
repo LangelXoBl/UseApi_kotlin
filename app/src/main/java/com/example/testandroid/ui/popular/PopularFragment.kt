@@ -1,5 +1,6 @@
 package com.example.testandroid.ui.popular
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.testandroid.R
 import com.example.testandroid.data.entities.MovieEntity
 import com.example.testandroid.data.model.Movie
@@ -18,6 +21,7 @@ import com.example.testandroid.data.model.ResourceStatus
 import com.example.testandroid.databinding.FragmentPopularBinding
 import com.example.testandroid.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -48,14 +52,15 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
 
         binding.rvMovies.layoutManager = LinearLayoutManager(context)
 
-        viewModel.fetchPopularMovies.observe(viewLifecycleOwner, Observer {
+        this.viewModel.fetchPopularMovies.observe(viewLifecycleOwner, Observer {
             when (it.resourceStatus) {
                 ResourceStatus.LOADING -> {
                     Log.e("fetchPopularMovies", "Loading")
                 }
                 ResourceStatus.SUCCESS  -> {
                     Log.e("fetchPopularMovies", "Success data: ${it.data?.size}")
-                    popularMovieItemAdapter = PopularMovieItemAdapter(it.data!!, this@PopularFragment)
+                    binding.total.text= it.data?.size.toString()
+                    popularMovieItemAdapter = PopularMovieItemAdapter(it.data!! as MutableList<MovieEntity>, this@PopularFragment)
                     binding.rvMovies.adapter = popularMovieItemAdapter
                 }
                 ResourceStatus.ERROR -> {
@@ -65,6 +70,44 @@ class PopularFragment : Fragment(), PopularMovieItemAdapter.OnMovieClickListener
                 }
             }
         })
+
+        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = binding.rvMovies.layoutManager as LinearLayoutManager
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                val totalItemCount = layoutManager.itemCount
+                if (lastVisibleItemPosition == totalItemCount - 1) {
+                    moreMovies()
+                }
+            }
+        })
+
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun moreMovies(){
+        lifecycleScope.launch{
+            viewModel.fetchPopularMovies.observe(viewLifecycleOwner, Observer {
+                when (it.resourceStatus) {
+                    ResourceStatus.LOADING -> {
+                        Log.e("fetchPopularMovies", "Loading")
+                    }
+                    ResourceStatus.SUCCESS  -> {
+                        Log.e("fetchPopularMovies", "Success data: ${it.data?.size}")
+                        binding.total.text= it.data?.size.toString()
+                        it.data?.let { it1 -> popularMovieItemAdapter.moreMovies(it1) }
+                        popularMovieItemAdapter.notifyDataSetChanged()
+                    }
+                    ResourceStatus.ERROR -> {
+                        Log.e("fetchPopularMovies", "Failure: ${it.message} ")
+                        Toast.makeText(requireContext(), "Failure: ${it.message}", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+        }
     }
 
     override fun onDestroyView() {

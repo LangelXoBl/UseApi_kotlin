@@ -11,7 +11,7 @@ import com.example.testandroid.utils.DateUtils
 import com.squareup.picasso.Picasso
 
 class PopularMovieItemAdapter (
-    private val moviesList: List<MovieEntity>,
+    private val moviesList: MutableList<MovieEntity>,
     private val itemClickListener: OnMovieClickListener
 ) : RecyclerView.Adapter<PopularMovieItemAdapter.PopularViewHolder>()  {
 
@@ -42,6 +42,11 @@ class PopularMovieItemAdapter (
                 }
             }
         }
+    }
+
+
+    fun moreMovies(newMovies: List<MovieEntity>){
+        moviesList.addAll(newMovies)
     }
 
     inner class PopularViewHolder(val binding: ItemMovieBinding)
