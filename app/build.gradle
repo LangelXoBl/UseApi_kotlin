@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId "com.example.testandroid"
         //La version minima para ejecutar la app
-        minSdk 29
+        minSdk 28
         //La version que se le esta dando foco
         targetSdk 33
         //Se va ir incrementado en uno por funcionalidad, Vistas, etc, que se le va agregando a la app
@@ -57,6 +57,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.testandroid'
 }
 
 dependencies {
