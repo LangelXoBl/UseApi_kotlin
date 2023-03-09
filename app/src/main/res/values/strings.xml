@@ -2,8 +2,8 @@
     <string name="app_name">TestAndroid</string>
     <!--Menu-->
     <string name="action_popular">Popular</string>
-    <string name="action_tv">TV</string>
-    <string name="action_trendingWeek">Trending week</string>
+    <string name="action_family">Family</string>
+    <string name="action_trendingWeek">Top Rated</string>
     <string name="action_detail">Details</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -22,5 +22,5 @@
     <string name="lorem_title">Lorem ipsum dolor sit amet.</string>
     <string name="lorem_description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</string>
     <string name="label_popular_movie">Popular Movie</string>
-
+    <string name="label_family_movie">Family Movie</string>
 </resources>

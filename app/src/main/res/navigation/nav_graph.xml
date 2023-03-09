@@ -23,17 +23,21 @@
             app:argType="com.example.testandroid.data.entities.MovieEntity" />
     </fragment>
     <fragment
-        android:id="@+id/tvFragment"
-        android:name="com.example.testandroid.ui.tv.TvFragment"
-        android:label="@string/action_tv"
-        tools:layout="@layout/fragment_tv" />
-    <fragment
         android:id="@+id/trendingWeekFragment"
         android:name="com.example.testandroid.ui.trendingWeek.TrendingWeekFragment"
         android:label="@string/action_trendingWeek"
         tools:layout="@layout/fragment_trending_week" >
         <action
             android:id="@+id/action_trendingWeekFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/familyFragment"
+        android:name="com.example.testandroid.ui.family.FamilyFragment"
+        android:label="@string/action_family"
+        tools:layout="@layout/fragment_family" >
+        <action
+            android:id="@+id/action_familyFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 </navigation>
