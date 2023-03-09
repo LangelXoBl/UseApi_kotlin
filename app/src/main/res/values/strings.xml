@@ -3,7 +3,7 @@
     <!--Menu-->
     <string name="action_popular">Popular</string>
     <string name="action_family">Family</string>
-    <string name="action_trendingWeek">Trending week</string>
+    <string name="action_trendingWeek">Top Rated</string>
     <string name="action_detail">Details</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
