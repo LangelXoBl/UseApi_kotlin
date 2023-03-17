@@ -10,25 +10,26 @@ import com.example.testandroid.utils.performGetOperation
 
 class MovieRepository @Inject constructor(
     private val localDataSource: MovieDao,
-    private val remoteDataSource: RemoteDataSource) {
+    private val remoteDataSource: RemoteDataSource
+) {
 
 
-    fun getPopularMovies() = performGetOperation(
+    fun getPopularMovies(page: Int) = performGetOperation(
         databaseQuery = { localDataSource.getAllMovies(MovieType.POPULAR.value) },
-        networkCall = { remoteDataSource.getPopularMovies() },
+        networkCall = { remoteDataSource.getPopularMovies(page) },
         saveCallResult = { localDataSource.insertAll(it.results.toMovieEntityList(MovieType.POPULAR.value)) }
     )
 
     fun getTopRatedMovies() = performGetOperation(
-        databaseQuery = {localDataSource.getAllMovies(MovieType.TOPRATED.value)},
-        networkCall = {remoteDataSource.getTopRatedMovies()},
-        saveCallResult = {localDataSource.insertAll(it.results.toMovieEntityList(MovieType.TOPRATED.value))}
+        databaseQuery = { localDataSource.getAllMovies(MovieType.TOPRATED.value) },
+        networkCall = { remoteDataSource.getTopRatedMovies() },
+        saveCallResult = { localDataSource.insertAll(it.results.toMovieEntityList(MovieType.TOPRATED.value)) }
 
     )
 
     fun getFamilyMovies() = performGetOperation(
-        databaseQuery = {localDataSource.getAllMovies(MovieType.FAMILY.value)},
-        networkCall = {remoteDataSource.getFamilyMovies()},
-        saveCallResult = {localDataSource.insertAll(it.results.toMovieEntityList(MovieType.FAMILY.value))}
+        databaseQuery = { localDataSource.getAllMovies(MovieType.FAMILY.value) },
+        networkCall = { remoteDataSource.getFamilyMovies() },
+        saveCallResult = { localDataSource.insertAll(it.results.toMovieEntityList(MovieType.FAMILY.value)) }
     )
 }

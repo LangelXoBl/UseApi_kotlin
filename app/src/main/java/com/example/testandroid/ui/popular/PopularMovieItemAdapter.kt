@@ -1,6 +1,7 @@
 package com.example.testandroid.ui.popular
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +12,7 @@ import com.example.testandroid.utils.DateUtils
 import com.squareup.picasso.Picasso
 
 class PopularMovieItemAdapter (
-    private val moviesList: List<MovieEntity>,
+    private val moviesList: MutableList<MovieEntity>,
     private val itemClickListener: OnMovieClickListener
 ) : RecyclerView.Adapter<PopularMovieItemAdapter.PopularViewHolder>()  {
 
@@ -42,6 +43,14 @@ class PopularMovieItemAdapter (
                 }
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public fun addMovies(newMovies: List<MovieEntity>){
+        var actual = moviesList.size
+        moviesList.addAll(newMovies)
+        //notifyDataSetChanged()
+        notifyItemRangeInserted(actual,newMovies.size)
     }
 
     inner class PopularViewHolder(val binding: ItemMovieBinding)

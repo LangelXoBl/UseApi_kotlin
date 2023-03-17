@@ -13,9 +13,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class PopularViewModel @Inject constructor (private val repository: MovieRepository) : ViewModel() {
+class PopularViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
+    var page = 4;
 
-
-    val fetchPopularMovies: LiveData<Resource<List<MovieEntity>>> = repository.getPopularMovies()
+    val fetchPopularMovies: LiveData<Resource<List<MovieEntity>>> =
+        repository.getPopularMovies(page)
 }
